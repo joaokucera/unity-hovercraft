@@ -8,7 +8,7 @@ Take a look on [WebGL live demo]().
 
 ##### How to improve it?
 
-Create a fork of [unity-snake](https://github.com/joaokucera/unity-hovercraft/fork). 
+Create a fork of [unity-hovercraft](https://github.com/joaokucera/unity-hovercraft/fork). 
 
 Did you change it? [submit a pull request](https://github.com/joaokucera/unity-hovercraft/pull/new/master).
 
