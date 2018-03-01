@@ -1,13 +1,15 @@
 ﻿using System;
 using UnityEngine;
 
-public partial class PoolingSystem
+[Serializable]
+public class PoolItem
 {
-    [Serializable]
-    public class PoolItem
-    {
-        public string Tag;
-        public GameObject Prefab;
-        public int Size;
+    public GameObject Prefab;
+    public int Size;
+
+    public string Tag {
+        get {
+            return Prefab.tag;
+        }
     }
 }

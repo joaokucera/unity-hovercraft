@@ -2,14 +2,18 @@
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField]
+    private Transform _transform;
     private UIManager _uiManager;
+
     [SerializeField]
     private int _lives;
 
     private void Start()
     {
-        _uiManager.UpdateLife(_lives);
+        _transform = transform;
+
+        _uiManager = FindObjectOfType<UIManager>();
+        _uiManager.UpdateLives(_lives);
     }
 
     public void Hit()
@@ -17,11 +21,14 @@ public class PlayerHealth : MonoBehaviour
         _lives--;
 
         if (_lives >= 0) {
-            _uiManager.UpdateLife(_lives);
+            _uiManager.UpdateLives(_lives);
         }
 
         if (_lives == 0) {
+            _transform.DetachChildren();
             gameObject.SetActive(false);
+
+            _uiManager.OnEndGame();
         }
     }
 }

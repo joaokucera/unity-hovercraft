@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public partial class PoolingSystem : MonoBehaviour
+public class PoolingSystem : MonoBehaviour
 {
     private Dictionary<string, Queue<GameObject>> _poolDictionary;
 
@@ -28,7 +28,7 @@ public partial class PoolingSystem : MonoBehaviour
 
     public GameObject Dequeue(string tag, Vector3 position, Quaternion rotation)
     {
-        GameObject obj = _poolDictionary[tag].Dequeue();
+        var obj = _poolDictionary[tag].Dequeue();
 
         obj.transform.position = position;
         obj.transform.rotation = rotation;

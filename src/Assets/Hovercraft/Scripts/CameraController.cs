@@ -30,11 +30,11 @@ public class CameraController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 wantedPosition = _target.TransformPoint(0, _height, -_distance);
-        Vector3 lookPosition = _target.TransformPoint(Vector3.zero);
+        var wantedPosition = _target.TransformPoint(0, _height, -_distance);
+        var lookPosition = _target.TransformPoint(Vector3.zero);
 
         RaycastHit hit;
-        Vector3 backwards = _target.transform.TransformDirection(-1 * Vector3.forward);
+        var backwards = _target.transform.TransformDirection(-1 * Vector3.forward);
 
         if (Physics.Raycast(lookPosition, backwards, out hit, _bumperDistanceCheck) && hit.transform != _target) {
             wantedPosition.x = hit.point.x;
@@ -44,7 +44,7 @@ public class CameraController : MonoBehaviour
 
         _transform.position = Vector3.Lerp(_transform.position, wantedPosition, Time.deltaTime * _damping);
 
-        Quaternion wantedRotation = Quaternion.LookRotation(lookPosition - _transform.position, _target.up);
+        var wantedRotation = Quaternion.LookRotation(lookPosition - _transform.position, _target.up);
 
         _transform.rotation = Quaternion.Slerp(_transform.rotation, wantedRotation, Time.deltaTime * _rotationDamping);
     }

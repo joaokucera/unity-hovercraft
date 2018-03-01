@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Hovercraft/Scenes/Menu.unity
+    guid: 6166eba50a7ed43e79ec8751e31cd21a
+  - enabled: 1
+    path: Assets/Hovercraft/Scenes/Game.unity
+    guid: 6c1f92e36477c4c8d8efec9a720115d7

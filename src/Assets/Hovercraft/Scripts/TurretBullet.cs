@@ -7,7 +7,7 @@ public class TurretBullet : MonoBehaviour
     private Rigidbody _rigidbody;
 
     [SerializeField]
-    private float _force;
+    private float _movementSpeed;
     [SerializeField]
     [Range(-0.5f, -0.1f)]
     private float _minDeviation;
@@ -15,29 +15,38 @@ public class TurretBullet : MonoBehaviour
     [Range(0.1f, 0.5f)]
     private float _maxDeviation;
 
+    [HideInInspector]
+    public event AfterHit OnAfterHit;
+
     private void OnEnable()
     {
-        if (!_transform) {
-            _transform = transform;
+        if (!_transform) { 
+            _transform = transform; 
         }
         if (!_rigidbody) {
-            _rigidbody = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody>();   
         }
 
         var direction = Vector3.forward;
         direction.x = Random.Range(_minDeviation, _maxDeviation);
 
-        _rigidbody.velocity = _transform.TransformDirection(direction * _force);
+        _rigidbody.velocity = _transform.TransformDirection(direction * _movementSpeed);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) {
+        bool isPlayer = other.CompareTag("Player");
+
+        if (isPlayer) {
             var player = other.GetComponent<PlayerHealth>();
 
             if (player) {
                 player.Hit();
             }
+        }
+
+        if (OnAfterHit != null) {
+            OnAfterHit(isPlayer);
         }
 
         gameObject.SetActive(false);

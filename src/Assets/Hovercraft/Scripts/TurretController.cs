@@ -5,9 +5,10 @@ public class TurretController : MonoBehaviour
 {
     private Transform _transform;
     private TurretGun _gun;
+    private Transform _target;
 
     [SerializeField]
-    private Transform _target;
+    private Transform _cannon;
     [SerializeField]
     private Transform _aim;
     [SerializeField]
@@ -23,6 +24,8 @@ public class TurretController : MonoBehaviour
     {
         _transform = transform;
         _gun = GetComponent<TurretGun>();
+
+        _target = GameObject.FindWithTag("Player").transform;
     }
 
     private void Update()
@@ -30,7 +33,7 @@ public class TurretController : MonoBehaviour
         if (IsTargetWithinRange(_aimingRange)) {
             Movement();
 
-            if (IsAiming() && IsTargetWithinRange(_shootingRange)) {
+            if (IsTargetWithinRange(_shootingRange) && IsAiming()) {
                 Shooting();
             }
         }
@@ -49,6 +52,9 @@ public class TurretController : MonoBehaviour
 
         Gizmos.color = IsTargetWithinRange(_aimingRange) ? Color.yellow : Color.white;
         Gizmos.DrawWireSphere(_transform.position, _aimingRange);
+
+        Gizmos.color = IsTargetWithinRange(_shootingRange) ? Color.red : Color.white;
+        Gizmos.DrawWireSphere(_transform.position, _shootingRange);
     }
 
     private bool IsTargetWithinRange(float range)
@@ -58,19 +64,19 @@ public class TurretController : MonoBehaviour
 
     private void Movement()
     {
-        Vector3 direction = _target.position - transform.position;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        Vector3 lerpRotation = Quaternion.Lerp(_transform.rotation, lookRotation, _turningSpeed * Time.deltaTime).eulerAngles;
+        var direction = _target.position - transform.position;
+        var lookRotation = Quaternion.LookRotation(direction);
+        var lerpRotation = Quaternion.Lerp(_transform.rotation, lookRotation, _turningSpeed * Time.deltaTime).eulerAngles;
 
         _transform.rotation = Quaternion.Euler(0f, lerpRotation.y, 0f);
     }
 
     private bool IsAiming()
     {
-        Vector3 forward = _aim.parent.TransformDirection(Vector3.forward);
+        var forward = _aim.TransformDirection(Vector3.forward);
 
         RaycastHit hit;
-        if (Physics.Raycast(_aim.parent.position, forward, out hit) && hit.transform.CompareTag("Player")) {
+        if (Physics.Raycast(_aim.position, forward, out hit) && hit.transform.CompareTag("Player")) {
             _lineRenderer.SetPosition(0, _aim.parent.position);
             _lineRenderer.SetPosition(1, _target.position);
 
@@ -86,6 +92,6 @@ public class TurretController : MonoBehaviour
 
     private void Shooting()
     {
-        _gun.Shoot(_aim.position, _aim.rotation);
+        _gun.Shoot(_cannon.position, _cannon.rotation);
     }
 }
