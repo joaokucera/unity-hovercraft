@@ -8,6 +8,12 @@ It's a repository for a prototype made in between a day and another. Feel free t
 
 Take a look on [WebGL live demo](https://rawgit.com/joaokucera/unity-hovercraft/master/build/webgl/index.html).
 
+##### Screenshots
+
+<img src="https://i.imgur.com/A6uAXfF.png" />
+<img src="https://i.imgur.com/T88OKGr.png" />
+<img src="https://i.imgur.com/dSfe0eW.png" />
+
 ##### How to improve it?
 
 Create a fork of [unity-hovercraft](https://github.com/joaokucera/unity-hovercraft/fork). 
